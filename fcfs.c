@@ -79,19 +79,6 @@ void print_table(struct process p[3], int n)
     }
 }
 
-void print_gantt_chart(struct process p[3], int n)
-{
-    printf("Gantt Chart is: \n");
-    int sum_bt = 0;
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        printf(" [P%d]%d -->", i + 1, sum_bt);
-        sum_bt += p[i].bt;
-    }
-    printf(" [P%d]%d \n\n", i + 1, sum_bt);
-}
-
 void avgWT(struct process p[3], int n)
 {
     int sumWT = 0;
@@ -143,8 +130,6 @@ int main()
     }
 
     sort_by_at(p, n);
-
-    print_gantt_chart(p, n);
 
     calculate(p, n);
 
