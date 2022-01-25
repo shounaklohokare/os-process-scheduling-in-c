@@ -124,3 +124,37 @@ int main()
     printf("\nAverage RT = %f", (float)sum_rt / n);
     return 0;
 }
+
+/*
+Enter the number of process: 4
+
+Process----->1
+Enter the arrival time of process: 0
+
+Etner the burst time of process: 10
+
+Process----->2
+Enter the arrival time of process: 1
+
+Etner the burst time of process: 2
+
+Process----->3
+Enter the arrival time of process: 4
+
+Etner the burst time of process: 5
+
+Process----->4
+Enter the arrival time of process: 6
+
+Etner the burst time of process: 1
+
+PID     AT      BT      CT      TAT     WT      RT
+0       0       10      18      18      8       0
+1       1       2       3       2       0       0
+2       4       5       10      6       1       0
+3       6       1       7       1       0       0
+
+Average TAT = 6.750000
+Average WT = 2.250000
+Average RT = 0.000000
+*/
