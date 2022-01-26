@@ -160,5 +160,62 @@ int main()
 }
 
 
+/*
 
+Enter no. of processes:6
+
+Enter arrival time for process 1:12
+
+Enter burst time for process 1:7
+
+Enter priority for process 1:5
+
+Enter arrival time for process 2:1
+
+Enter burst time for process 2:4
+
+Enter priority for process 2:1
+
+Enter arrival time for process 3:0
+
+Enter burst time for process 3:3
+
+Enter priority for process 3:2
+
+Enter arrival time for process 4:2
+
+Enter burst time for process 4:4
+
+Enter priority for process 4:1
+
+Enter arrival time for process 5:8
+
+Enter burst time for process 5:7
+
+Enter priority for process 5:2
+
+Enter arrival time for process 6:14
+
+Enter burst time for process 6:2
+
+Enter priority for process 6:4
+PID     AT      BT      CT      RT      WT      TAT
+
+3       0       3       3       0       0       3
+
+2       1       4       7       2       2       6
+
+4       2       4       11      5       5       9
+
+5       8       7       18      3       3       10
+
+1       12      7       27      8       8       15
+
+6       14      2       20      4       4       6
+
+Gantt Chart
+|0  P3   3||3  P2   7||7  P4   11||11  P5   18||18  P6   20||20  P1   27|
+Average TAT=8.166667
+Average WT=3.666667
+*/
 		
