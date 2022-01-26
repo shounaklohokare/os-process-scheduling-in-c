@@ -1,145 +1,122 @@
 #include <stdio.h>
 
-struct process
+typedef struct PROCESS
 {
-    int at;
-    int bt;
-    int tat;
-    int wt;
-    int rt;
-    int pid;
-};
+	int pid, tat, wt, at, bt, rt;
+} PROCESS;
 
-void sort_by_at(struct process p[3], int n)
+PROCESS p[10];
+int processCount, i, j, k, totalTat = 0, totalWt = 0;
+float avgtat, avgwt;
+
+void sort()
 {
-
-    int i, j;
-    for (i = 0; i < n - 1; i++)
-    {
-
-        for (j = 0; j < n - i - 1; j++)
-        {
-
-            if (p[j].at > p[j + 1].at)
-            {
-                struct process temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
-        }
-    }
+	PROCESS p1;
+	for (i = 0; i < processCount; i++)
+	{
+		for (j = i + 1; j < processCount; j++)
+		{
+			if (p[j].at < p[i].at)
+			{
+				p1 = p[j];
+				p[j] = p[i];
+				p[i] = p1;
+			}
+		}
+	}
 }
 
-void sort_by_pid(struct process p[3], int n)
+void getProcess()
 {
+	printf("Enter the number of processes : ");
+	scanf("%d", &processCount);
+	for (i = 0; i < processCount; i++)
+	{
+		p[i].pid = i;
+		printf("Enter the arrival time : ");
+		scanf("%d", &p[i].at);
 
-    int i, j;
-    for (i = 0; i < n - 1; i++)
-    {
+		printf("Enter the burst time : ");
+		scanf("%d", &p[i].bt);
 
-        for (j = 0; j < n - i - 1; j++)
-        {
-
-            if (p[j].pid > p[j + 1].pid)
-            {
-                struct process temp = p[j];
-                p[j] = p[j + 1];
-                p[j + 1] = temp;
-            }
-        }
-    }
+		printf("\n");
+	}
+	sort();
 }
 
-void calculate(struct process p[3], int n)
+void process()
 {
-
-    int sum_bt = 0;
-    int i;
-    for (i = 0; i < n; i++)
-    {
-
-        p[i].rt = sum_bt - p[i].at;
-        p[i].wt = sum_bt - p[i].at;
-
-        sum_bt += p[i].bt;
-
-        p[i].tat = sum_bt - p[i].at;
-    }
+	int time = 0, i = 0;
+	printf("\nGanttChart : ");
+	printf("\n");
+	printf("|%d ", time);
+	while (i < processCount)
+	{
+		p[i].wt = p[i].rt = time - p[i].at;
+		time = time + p[i].bt;
+		printf("%d ", p[i].pid);
+		if (i == processCount - 1)
+		{
+			printf("%d| ", time);
+		}
+		else
+		{
+			printf("%d|%d ", time, time);
+		}
+		p[i].tat = p[i].wt + p[i].bt;
+		totalTat += p[i].tat;
+		totalWt += p[i].wt;
+		i++;
+	}
+	printf("\n");
+	avgtat = (float)totalTat / processCount;
+	avgwt = (float)totalWt / processCount;
 }
 
-void print_table(struct process p[3], int n)
+void display()
 {
-
-    int i;
-    printf("PID\t\tRT\t\tWT\t\tTAT\n");
-    for (i = 0; i < n; i++)
-    {
-        printf("%d\t\t%d\t\t%d\t\t%d", p[i].pid + 1, p[i].rt, p[i].wt, p[i].tat);
-        printf("\n");
-    }
+	printf("\n");
+	printf("Pid\tBT\tAT\tRT\tWT\tTAT\n");
+	for (i = 0; i < processCount; i++)
+	{
+		printf("%d\t%d\t%d\t%d\t%d\t%d\n", p[i].pid, p[i].bt, p[i].at, p[i].rt, p[i].wt, p[i].tat);
+	}
+	printf("\n");
+	printf("Average Response time is %f \n", avgwt);
+	printf("Average Waiting time is %f \n", avgwt);
+	printf("Average Turnaround time is %f \n", avgtat);
 }
-
-void avgWT(struct process p[3], int n)
+main()
 {
-    int sumWT = 0;
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        sumWT += p[i].wt;
-    }
-
-    printf("\nAverage WT = %f", (float)sumWT / n);
+	getProcess();
+	process();
+	display();
 }
+/*
+Enter the number of processes : 4
+Enter the arrival time : 0
+Enter the burst time : 8
 
-void avgTAT(struct process p[3], int n)
-{
-    int sumTAT = 0;
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        sumTAT += p[i].tat;
-    }
+Enter the arrival time : 3
+Enter the burst time : 1
 
-    printf("\nAverage TAT = %f", (float)sumTAT / n);
-}
+Enter the arrival time : 8
+Enter the burst time : 5
 
-int main()
-{
+Enter the arrival time : 2
+Enter the burst time : 3
 
-    int n;
 
-    printf("Enter the number of processes you want:");
-    scanf("%d", &n);
+GanttChart :
+|0 0 8|8 3 11|11 1 12|12 2 17|
 
-    struct process p[n];
+Pid     BT      AT      RT      WT      TAT
+0       8       0       0       0       8
+3       3       2       6       6       9
+1       1       3       8       8       9
+2       5       8       4       4       9
 
-    int i;
-    for (i = 0; i < n; i++)
-    {
-        p[i].pid = i;
-
-        printf("\nEnter the details of process number %d\n", i + 1);
-
-        printf("Enter the arrival of the process: ");
-        scanf("%d", &p[i].at);
-
-        printf("Enter the burst time of the process: ");
-        scanf("%d", &p[i].bt);
-
-        printf("\n");
-    }
-
-    sort_by_at(p, n);
-
-    calculate(p, n);
-
-    sort_by_pid(p, n);
-
-    print_table(p, n);
-
-    avgTAT(p, n);
-
-    avgWT(p, n);
-
-    return 0;
-}
+Average Response time is 4.500000
+Average Waiting time is 4.500000
+Average Turnaround time is 8.750000
+*/
